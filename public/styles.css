@@ -1,0 +1,15 @@
+body {
+  background: rgb(242, 242, 242);
+}
+h3 {
+  margin-top: 40px;
+}
+ul{
+  text-align: center;
+  width: max-content;
+}
+li{
+  list-style: none;
+  border: 1px solid black;
+  text-align: left;
+}

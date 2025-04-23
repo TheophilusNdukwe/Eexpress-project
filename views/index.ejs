@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crypto Ledger</title>
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <link rel="stylesheet" href="font-awesome.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Crypto Ledger</h1>
+    <h2>Track My Crypto wallet!</h2>
+  </header>
+  
+
+  <h3>Transactions</h3>
+  <ul class="transactions">
+  <% let sum = 0 %>
+  <% let cryptoSum = 0 %>
+  <% for(var i=0; i<transactions.length; i++) {%>
+    <li class="transaction">
+      <span><%= transactions[i].coin %></span>==>
+      <span><%= transactions[i].buyPrice %></span>==>
+      <span><%= transactions[i].amount %></span>==>
+      <span>$<%= (transactions[i].buyPrice * transactions[i].amount).toFixed(3) %></span>
+      <% sum += parseFloat(transactions[i].buyPrice) * parseFloat(transactions[i].amount) %>
+      <% cryptoSum += parseFloat(transactions[i].amount) %>
+      <% if(transactions[i].audit){ %>
+        <span><i class="fa-solid fa-square-check" aria-hidden="true"></i></span>
+        <% } else {  %>
+          <span><i class="fa fa-pencil" aria-hidden="true"></i></span>
+       <% } %>
+      
+      
+    </li>
+  <% } %>
+  </ul>
+  <h2>Total Invested => $<%= sum.toFixed(3) %></h2>
+  <p>Coin Amount => <%= cryptoSum %></p> 
+  <h4>Enter transaction here</h4>
+
+  <form action="/transactions" method="POST">
+    <input type="text" placeholder="Ex: DEGENUSD" name="coin">
+    <input type="number" placeholder="Ex: 1.30" step="0.00000001" name="buyPrice">
+    <input type="number" placeholder="Enter coin amount" step="0.0001" name="amount">
+    <button type="submit">Add transaction</button>
+  </form>
+
+  <script src="main.js"></script>
+  <script src="https://kit.fontawesome.com/f8ec983be8.js" crossorigin="anonymous"></script>
+</body>
+</html>
