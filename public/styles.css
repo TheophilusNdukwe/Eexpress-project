@@ -1,15 +1,89 @@
+/* styles.css */
+
+:root {
+  --main-background: rgb(242, 242, 242); /* Light background */
+  --text-color: #333; /* Dark text */
+  --border-color: #ddd;
+  --base-spacing: 16px;
+  --card-background: #fff; /* Card background color */
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Card shadow */
+  --accent-color: #007bff; /* Example accent color for highlights */
+}
+
 body {
-  background: rgb(242, 242, 242);
+  background: var(--main-background);
+  margin: 0;
+  padding: var(--base-spacing);
+  color: var(--text-color);
+  font-family: sans-serif; /* Add a standard font */
 }
-h3 {
-  margin-top: 40px;
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Responsive grid */
+  grid-gap: var(--base-spacing);
+  max-width: 1400px; /* Adjust for larger screens */
+  margin: 0 auto;
 }
-ul{
-  text-align: center;
-  width: max-content;
+
+.dashboard-header {
+  background: var(--card-background);
+  padding: var(--base-spacing);
+  box-shadow: var(--card-shadow);
+  margin-bottom: var(--base-spacing);
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space items apart */
 }
-li{
+
+.dashboard-header h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.card {
+  background: var(--card-background);
+  padding: var(--base-spacing);
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: var(--card-shadow);
+}
+
+.card h3 {
+  margin-top: 0; /* Remove default top margin for h3 inside cards */
+}
+
+ul {
   list-style: none;
-  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  border-bottom: 1px solid var(--border-color);
+  padding: calc(var(--base-spacing) / 2) 0; /* Add vertical padding */
+}
+
+li:last-child {
+  border-bottom: none; /* Remove border on last item */
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid var(--border-color);
+  padding: calc(var(--base-spacing) / 2);
   text-align: left;
 }
