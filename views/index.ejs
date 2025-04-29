@@ -62,7 +62,7 @@
               </thead>
               <tbody>
                 <% for(let i=0; i<transactions.length; i++) { %>
-                  <tr class="transaction-row">
+                  <tr class="transaction-row" data-id="<%= transactions[i]._id %>" >
                     <td class="coin-cell">
                       <span class="coin-symbol"><%= transactions[i].coin %></span>
                     </td>
@@ -71,9 +71,9 @@
                     <td class="value-cell">$<%= (transactions[i].buyPrice * transactions[i].amount).toFixed(2) %></td>
                     <td class="status-cell">
                       <% if(transactions[i].audit) { %>
-                        <span class="status verified" title="Verified"><i class="fa-solid fa-square-check" aria-hidden="true"></i><span class="sr-only">Verified</span></span>
+                        <span class="status verified" title="Verified"><i class="fa-solid fa-square-check" aria-hidden="true"></i> </span>
                       <% } else { %>
-                        <span class="status pending" title="Pending"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">Pending</span></span>
+                        <span class="status pending" title="Pending"><i class="fa fa-pencil" aria-hidden="true"></i> <i class="fa-solid fa-trash" aria-hidden="true"></i></span>
                       <% } %>
                     </td>
                   </tr>

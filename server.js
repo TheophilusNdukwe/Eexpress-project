@@ -2,8 +2,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const ObjectId = require('mongodb').ObjectId //allowing mongodb to find the record by ID
 const MongoClient = require('mongodb').MongoClient;
+
  require('dotenv').config(); // Load environment variables from .env
+
 
 var db;
 
@@ -55,48 +58,30 @@ app.get('/', (req, res) => {
 });
 
 app.post('/transactions', (req, res) => {
-  db.collection('transactions').insertOne(req.body)
+  db.collection('transactions').save({ coin: req.body.coin, buyPrice: req.body.buyPrice, amount: req.body.amount, audit: false })
     .then(result => {
       console.log('saved to database');
       res.redirect('/');
     })
-    .catch(error => {
-      console.error('Error saving transaction:', error);
-      res.status(500).send('Error saving transaction');
-    });
 });
 
-app.put('/transactions', (req, res) => {
-  db.collection('transactions').findOneAndUpdate({
-    coin: req.body.coin,
-    buyPrice: req.body.buyPrice,
-    amount: req.body.amount
-  }, {
-    $set: {
-      audit: true
-    }
-  }, {
-    sort: { _id: -1 },
-    upsert: true
-  })
-    .then(result => {
-      if (result.lastErrorObject.updatedExisting) {
-        res.send(result);
-      } else {
-        res.status(404).send('Document not found or not updated');
-      }
-    })
-    .catch(error => {
-      console.error('Error updating transaction:', error);
-      res.status(500).send('Error updating transaction');
-    });
+app.put('/transactions/audit', (req, res) => {
+ 
+  db.collection('transactions').findOneAndUpdate(
+        { _id: ObjectId(req.body._id) }, //Find by name, task, and not done.
+        { $set: { audit: true } }, //change to true
+        { sort: { _id: -1 }, upsert: false }, //upsert is false as we should never create a new one here
+    (err, result) => {
+          console.log(req.body._id)
+            if (err) return res.send(err);
+            res.send(result);
+        }
+    );
 });
 
 app.delete('/transactions', (req, res) => {
   db.collection('transactions').findOneAndDelete({
-    coin: req.body.coin,
-    buyPrice: req.body.buyPrice,
-    amount: req.body.amount
+    _id: ObjectId(req.body._id)
   })
     .then(result => {
       if (result.value) {
