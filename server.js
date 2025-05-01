@@ -68,7 +68,7 @@ app.post('/transactions', (req, res) => {
 app.put('/transactions/audit', (req, res) => {
  
   db.collection('transactions').findOneAndUpdate(
-        { _id: ObjectId(req.body._id) }, //Find by name, task, and not done.
+        { _id: ObjectId(req.body._id) }, //Find by ID
         { $set: { audit: true } }, //change to true
         { sort: { _id: -1 }, upsert: false }, //upsert is false as we should never create a new one here
     (err, result) => {
